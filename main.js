@@ -84,12 +84,16 @@ function combatCheck(attackBonus,armorClass,damage){
     if(attackRoll==20){
         var firstDamage = damage;
         var criticalConfirm = d20();
-        if(criticalConfirm+attackBonus >= armorClass){
-            return firstDamage+damage;
+        console.log("You've hit a critical!");
+        if((criticalConfirm+attackBonus) >= armorClass){
+            console.log("You did " + (firstDamage+damage) + " damage!");
+            return (firstDamage+damage);
         }
-    } else if(attackRoll+attackBonus >= armorClass){
+    } else if((attackRoll+attackBonus) >= armorClass){
+        console.log("You hit your target for " + damage + " damage!");
         return damage;
     } else {
+        console.log("You've failed your attack roll.");
         return 0;
     }
 }
