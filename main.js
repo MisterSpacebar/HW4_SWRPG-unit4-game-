@@ -88,6 +88,9 @@ function combatCheck(attackBonus,armorClass,damage){
         if((criticalConfirm+attackBonus) >= armorClass){
             console.log("You did " + (firstDamage+damage) + " damage!");
             return (firstDamage+damage);
+        } else {
+            console.log("You did not confirm critical");
+            return firstDamage;
         }
     } else if((attackRoll+attackBonus) >= armorClass){
         console.log("You hit your target for " + damage + " damage!");
