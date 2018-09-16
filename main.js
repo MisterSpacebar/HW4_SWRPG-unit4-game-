@@ -81,18 +81,21 @@ var paladin = {
 //-------------combat---------------
 function combatCheck(attackBonus,armorClass,damage){
     var attackRoll = d20();
-    if(attackRoll==20){
+
+    if(attackRoll==20){ //--- critical hit
         var firstDamage = damage;
         var criticalConfirm = d20();
         console.log("You've hit a critical!");
-        if((criticalConfirm+attackBonus) >= armorClass){
+
+        if((criticalConfirm+attackBonus) >= armorClass){ //--- critical confirm
             console.log("You did " + (firstDamage+damage) + " damage!");
             return (firstDamage+damage);
         } else {
             console.log("You did not confirm critical");
             return firstDamage;
         }
-    } else if((attackRoll+attackBonus) >= armorClass){
+
+    } else if((attackRoll+attackBonus) >= armorClass){ //--- regular attack
         console.log("You hit your target for " + damage + " damage!");
         return damage;
     } else {
@@ -100,3 +103,27 @@ function combatCheck(attackBonus,armorClass,damage){
         return 0;
     }
 }
+function counterAttack(armorClass,damage){ //--- return damage
+    var attackRoll = 20();
+
+    if(attackRoll==20){
+        var firstDamage = damage;
+        var criticalConfirm = d20();
+        console.log("Enemy has rolled a critical!");
+
+        if(criticalConfirm>=armorClass){ //--- critical confirm
+            console.log("The enemy confirmed critical and dealt you "+(firstDamage+damage)+" damage!");
+            return (firstDamage+damage);
+        } else {
+            console.log("The enemy did not confirm the critical hit");
+            return firstDamage;
+        }
+    } else if(attackRoll>=armorClass){ //--- return damage
+        console.log("The enemy hits you for "+damage+" damage!");
+        return damage;
+    } else {
+        console.log("The enemy failed its attack roll!");
+        return 0;
+    }
+}
+
