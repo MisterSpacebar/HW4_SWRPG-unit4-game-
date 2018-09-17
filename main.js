@@ -34,7 +34,7 @@ function d20(){
 
 //-----------characters------------
 var wizard = {
-    HP: 20,
+    HP: 40,
     AC: 12,
     AB: 20,
     cAB: 20,
@@ -47,7 +47,7 @@ var wizard = {
     }
 };
 var fighter = {
-    HP: 35,
+    HP: 70,
     AC: 17,
     AB: 4,
     cAB: 4,
@@ -60,7 +60,7 @@ var fighter = {
     },
 };
 var ranger = {
-    HP: 30,
+    HP: 60,
     AC: 15,
     AB: 3,
     cAB: 7,
@@ -73,7 +73,7 @@ var ranger = {
     },
 };
 var paladin = {
-    HP: 40,
+    HP: 90,
     AC: 13,
     AB: 3,
     cAB: 0,
@@ -115,7 +115,7 @@ function combatCheck(attackBonus,armorClass,damage){
     }
 }
 function counterAttack(counterBonus,armorClass,damage){ //--- return damage
-    var attackRoll = 20();
+    var attackRoll = d20();
 
     if(attackRoll==20){
         var firstDamage = damage;
@@ -131,7 +131,7 @@ function counterAttack(counterBonus,armorClass,damage){ //--- return damage
             $("#combatLogBottom").text("The enemy hits you for "+firstDamage+" damage!");
             return firstDamage;
         }
-    } else if((attackRoll+counterBonus)>=armorClass){ //--- return damage
+    } else if((attackRoll+counterBonus)>=armorClass){
         console.log("The enemy hits you for "+damage+" damage!");
         $("#combatLogBottom").text("The enemy hits you for "+damage+" damage!");
         return damage;
@@ -142,7 +142,7 @@ function counterAttack(counterBonus,armorClass,damage){ //--- return damage
     }
 }
 
-//--------------make characters-------------------
+//-----------------make characters-------------------
 var wizChar = $("<img>").attr({
     "id":"wizard",
     "src":"assets/characters/alert_2.png",
@@ -169,3 +169,90 @@ var enemyCharacter = $("<figcaption>").attr({
     "id":"enemy_character",
 });
 
+//--------------------set the game----------------------
+window.onload = function startGame(){
+    gameReset();
+    $("#auxScreen").append(wizChar);
+    $("#auxScreen").append(fightChar);
+    $("#auxScreen").append(rangChar);
+    $("#auxScreen").append(palaChar);
+
+    $("#combatLogTop").text("Select a character");
+}
+
+//-------------------character data---------------------
+var isMCSelected = false;
+$(wizChar).on("click",function(){
+    if(isMCSelected==false){
+        $("#MC").prepend(wizChar);
+        $("#combatLogTop").text("Selected Wizard! Get ready for combat");
+        isMCSelected = true;
+    } else {
+        $("#combatLogBottom").text("Character is already selected! Choose someone else");
+    }
+});
+$(fightChar).on("click",function(){
+    if(isMCSelected==false){
+        $("#MC").prepend(fightChar);
+        $("#combatLogTop").text("Selected Fighter! Get ready for combat");
+        isMCSelected = true;
+    } else {
+        $("#combatLogBottom").text("Character is already selected! Choose someone else");
+    }
+});
+$(rangChar).on("click",function(){
+    if(isMCSelected==false){
+        $("#MC").prepend(rangChar);
+        $("#combatLogTop").text("Selected Ranger! Get ready for combat");
+        isMCSelected = true;
+    } else {
+        $("#combatLogBottom").text("Character is already selected! Choose someone else");
+    }
+});
+$(palaChar).on("click",function(){
+    if(isMCSelected==false){
+        $("#MC").prepend(palaChar);
+        $("#combatLogTop").text("Selected Paladin! Get ready for combat");
+        isMCSelected = true;
+    } else {
+        $("#combatLogBottom").text("Character is already selected! Choose someone else");
+    }
+});
+//--------------------character stats----------------------
+
+
+//--------------------reset the game-----------------------
+function resetGame(){
+    var confirmReset = confirm("Reset the game?");
+    if(confirmReset==true){
+        gameReset();
+        newGame();
+    }
+}
+function newGame(){
+    isMCSelected = false;
+
+    $("#auxScreen").append(wizChar);
+    $("#auxScreen").append(fightChar);
+    $("#auxScreen").append(rangChar);
+    $("#auxScreen").append(palaChar);
+
+    $("#combatLogTop").text("Select a character");
+    $("#combatLogBottom").text("");
+}
+$("#resetButton").on("click",function(){
+    resetGame();
+});
+function gameReset(){
+    wizard.HP = 40;
+    wizard.XP = 0;
+
+    fighter.HP = 70;
+    fighter.XP = 0;
+
+    ranger.HP = 60;
+    ranger.XP = 0;
+
+    paladin.HP = 90;
+    paladin.XP = 0;
+}

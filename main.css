@@ -16,3 +16,11 @@ img {
 figcaption {
     text-align: center;
 }
+
+#combatLogTop {
+    margin-bottom: 20px;
+}
+
+#combatLogBottom {
+    margin-top: 20px;
+}
