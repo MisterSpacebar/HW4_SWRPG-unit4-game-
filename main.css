@@ -24,3 +24,7 @@ figcaption {
 #combatLogBottom {
     margin-top: 20px;
 }
+
+#hideStuff {
+    display: none;
+}

@@ -144,18 +144,22 @@ function counterAttack(counterBonus,armorClass,damage){ //--- return damage
 
 //-----------------make characters-------------------
 var wizChar = $("<img>").attr({
+    "class":"player-characters",
     "id":"wizard",
     "src":"assets/characters/alert_2.png",
 });
 var fightChar = $("<img>").attr({
+    "class":"player-characters",
     "id":"fighter",
     "src":"assets/characters/alert_2.png",
 });
 var rangChar = $("<img>").attr({
+    "class":"player-characters",
     "id":"ranger",
     "src":"assets/characters/alert_2.png",
 });
 var palaChar = $("<img>").attr({
+    "class":"player-characters",
     "id":"paladin",
     "src":"assets/characters/alert_2.png",
 });
@@ -172,12 +176,24 @@ var enemyCharacter = $("<figcaption>").attr({
 //--------------------set the game----------------------
 window.onload = function startGame(){
     gameReset();
-    $("#auxScreen").append(wizChar);
-    $("#auxScreen").append(fightChar);
-    $("#auxScreen").append(rangChar);
-    $("#auxScreen").append(palaChar);
+    $("#selectionScreen").append(wizChar);
+    $("#selectionScreen").append(fightChar);
+    $("#selectionScreen").append(rangChar);
+    $("#selectionScreen").append(palaChar);
 
     $("#combatLogTop").text("Select a character");
+}
+if(wizard.HP<1){
+    $("#hideStuff").append(wizChar);
+}
+if(fighter.HP<1){
+    $("#hideStuff").append(fightChar);
+}
+if(ranger.HP<1){
+    $("#hideStuff").append(rangChar);
+}
+if(paladin.HP<1){
+    $("#hideStuff").append(palaChar);
 }
 
 //-------------------character data---------------------
@@ -198,7 +214,7 @@ var isFighterActiveEnemy = false;
 var isRangerActiveEnemy = false;
 var isPaladinActiveEnemy = false;
 //---character selection---
-$(wizChar).on("click",function(){
+$(wizChar).on("click",function(){ //---wizard
     if(isMCSelected==false){
         $("#MC").prepend(wizChar);
         $("#combatLogTop").text("Selected Wizard! Get ready for combat");
@@ -210,7 +226,7 @@ $(wizChar).on("click",function(){
         $("#combatLogBottom").text("Character is already selected! Choose someone else");
     }
 });
-$(fightChar).on("click",function(){
+$(fightChar).on("click",function(){ //---fighter
     if(isMCSelected==false){
         $("#MC").prepend(fightChar);
         $("#combatLogTop").text("Selected Fighter! Get ready for combat");
@@ -222,7 +238,7 @@ $(fightChar).on("click",function(){
         $("#combatLogBottom").text("Character is already selected! Choose someone else");
     }
 });
-$(rangChar).on("click",function(){
+$(rangChar).on("click",function(){ //---ranger
     if(isMCSelected==false){
         $("#MC").prepend(rangChar);
         $("#combatLogTop").text("Selected Ranger! Get ready for combat");
@@ -234,7 +250,7 @@ $(rangChar).on("click",function(){
         $("#combatLogBottom").text("Character is already selected! Choose someone else");
     }
 });
-$(palaChar).on("click",function(){
+$(palaChar).on("click",function(){ //---paladin
     if(isMCSelected==false){
         $("#MC").prepend(palaChar);
         $("#combatLogTop").text("Selected Paladin! Get ready for combat");
@@ -248,6 +264,8 @@ $(palaChar).on("click",function(){
 });
 //--------------------select enemies-----------------------
 var enemyArray = [isMCWizard,isMCFighter,isMCRanger,isMCPaladin];
+var activeEnemy = [isPaladinActiveEnemy,isFighterActiveEnemy,isRangerActiveEnemy,isWizardActiveEnemy];
+
 
 function selectEnemy(){
     var enemyArrayArray = enemyArray;
@@ -269,13 +287,14 @@ function resetGame(){
 function newGame(){
     isMCSelected = false;
 
-    $("#auxScreen").append(wizChar);
-    $("#auxScreen").append(fightChar);
-    $("#auxScreen").append(rangChar);
-    $("#auxScreen").append(palaChar);
+    $("#selectionScreen").append(wizChar);
+    $("#selectionScreen").append(fightChar);
+    $("#selectionScreen").append(rangChar);
+    $("#selectionScreen").append(palaChar);
 
     $("#combatLogTop").text("Select a character");
     $("#combatLogBottom").text("");
+    $("#mainCharacter").text("");
 }
 function gameReset(){
     wizard.HP = 40;
@@ -306,8 +325,6 @@ function gameReset(){
     isFighterActiveEnemy = false;
     isRangerActiveEnemy = false;
     isPaladinActiveEnemy = false;
-
-    $("#mainCharacter").text("");
 }
 $("#resetButton").on("click",function(){
     resetGame();
