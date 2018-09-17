@@ -104,7 +104,7 @@ function combatCheck(attackBonus,armorClass,damage){
             $("#combatLogTop").text("You've hit for target for "+firstDamage+" damage!");
             return firstDamage;
         }
-    } else if((attackRoll+attackBonus) >= armorClass){ //--- regular attack
+    } else if((attackRoll+attackBonus) >= armorClass){ //--- return damage
         console.log("You hit your target for " + damage + " damage!");
         $("#combatLogTop").text("You've hit for target for "+damage+" damage!");
         return damage;
@@ -182,22 +182,22 @@ window.onload = function startGame(){
 
 //-------------------character data---------------------
 var isMCSelected = false;
-
+//---check main character---
 var isMCWizard = false;
 var isMCFighter = false;
 var isMCRanger = false;
 var isMCPaladin = false;
-
+//---confirm enemy characters---
 var isEnemyWizard = true;
 var isEnemyFighter = true;
 var isEnemyRanger = true;
 var isEnemyPaladin = true;
-
+//---check active enemy---
 var isWizardActiveEnemy = false;
 var isFighterActiveEnemy = false;
 var isRangerActiveEnemy = false;
 var isPaladinActiveEnemy = false;
-
+//---character selection---
 $(wizChar).on("click",function(){
     if(isMCSelected==false){
         $("#MC").prepend(wizChar);
@@ -252,11 +252,12 @@ var enemyArray = [isMCWizard,isMCFighter,isMCRanger,isMCPaladin];
 function selectEnemy(){
     var enemyArrayArray = enemyArray;
     for(var i=0; i<enemyArrayArray.length; i++){
-        if(enemyArrayArray[i]==true){
+        if(enemyArrayArray[i]==true){ //---pops out player character
             enemyArrayArray = enemyArrayArray.splice(pos,i);
         }
     }
 }
+
 //--------------------reset the game-----------------------
 function resetGame(){
     var confirmReset = confirm("Reset the game?");
