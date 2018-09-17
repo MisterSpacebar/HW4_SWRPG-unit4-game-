@@ -276,9 +276,6 @@ function newGame(){
     $("#combatLogTop").text("Select a character");
     $("#combatLogBottom").text("");
 }
-$("#resetButton").on("click",function(){
-    resetGame();
-});
 function gameReset(){
     wizard.HP = 40;
     wizard.XP = 0;
@@ -311,3 +308,6 @@ function gameReset(){
 
     $("#mainCharacter").text("");
 }
+$("#resetButton").on("click",function(){
+    resetGame();
+});
