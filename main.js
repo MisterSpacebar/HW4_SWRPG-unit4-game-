@@ -37,17 +37,21 @@ var wizard = {
     HP: 20,
     AC: 12,
     AB: 20,
+    cAB: 20,
+    XP: 0,
     ATK: function(){
-        return d4()+d4()-1;
+        return d4();
     },
     cATK: function(){
-        return d4()+d4()-1;
+        return d4();
     }
 };
 var fighter = {
     HP: 35,
     AC: 17,
-    AB: 3,
+    AB: 4,
+    cAB: 4,
+    XP: 0,
     ATK: function(){
         return d8();
     },
@@ -58,7 +62,9 @@ var fighter = {
 var ranger = {
     HP: 30,
     AC: 15,
-    AB: 2,
+    AB: 3,
+    cAB: 7,
+    XP: 0,
     ATK: function(){
         return d6()+1
     },
@@ -70,6 +76,8 @@ var paladin = {
     HP: 40,
     AC: 13,
     AB: 3,
+    cAB: 0,
+    XP: 0,
     ATK: function(){
         return d12();
     },
@@ -89,21 +97,24 @@ function combatCheck(attackBonus,armorClass,damage){
 
         if((criticalConfirm+attackBonus) >= armorClass){ //--- critical confirm
             console.log("You did " + (firstDamage+damage) + " damage!");
+            $("#combatLogTop").text("You've hit a critical for "+(firstDamage+damage)+" damage!");
             return (firstDamage+damage);
         } else {
-            console.log("You did not confirm critical");
+            console.log("You did not confirm critical and did "+firstDamage+" damage");
+            $("#combatLogTop").text("You've hit for target for "+firstDamage+" damage!");
             return firstDamage;
         }
-
     } else if((attackRoll+attackBonus) >= armorClass){ //--- regular attack
         console.log("You hit your target for " + damage + " damage!");
+        $("#combatLogTop").text("You've hit for target for "+damage+" damage!");
         return damage;
     } else {
         console.log("You've failed your attack roll.");
+        $("#combatLogTop").text("You've failed for combat roll");
         return 0;
     }
 }
-function counterAttack(armorClass,damage){ //--- return damage
+function counterAttack(counterBonus,armorClass,damage){ //--- return damage
     var attackRoll = 20();
 
     if(attackRoll==20){
@@ -111,19 +122,50 @@ function counterAttack(armorClass,damage){ //--- return damage
         var criticalConfirm = d20();
         console.log("Enemy has rolled a critical!");
 
-        if(criticalConfirm>=armorClass){ //--- critical confirm
+        if((criticalConfirm+counterBonus)>=armorClass){ //--- critical confirm
             console.log("The enemy confirmed critical and dealt you "+(firstDamage+damage)+" damage!");
+            $("#combatLogBottom").text("The enemy confirmed critical and dealt you "+(firstDamage+damage)+" damage!")
             return (firstDamage+damage);
         } else {
-            console.log("The enemy did not confirm the critical hit");
+            console.log("The enemy did not confirm the critical hit and did "+firstDamage+" damage");
+            $("#combatLogBottom").text("The enemy hits you for "+firstDamage+" damage!");
             return firstDamage;
         }
-    } else if(attackRoll>=armorClass){ //--- return damage
+    } else if((attackRoll+counterBonus)>=armorClass){ //--- return damage
         console.log("The enemy hits you for "+damage+" damage!");
+        $("#combatLogBottom").text("The enemy hits you for "+damage+" damage!");
         return damage;
     } else {
         console.log("The enemy failed its attack roll!");
+        $("#combatLogBottom").text("The enemy failed their attack roll");
         return 0;
     }
 }
+
+//--------------make characters-------------------
+var wizChar = $("<img>").attr({
+    "id":"wizard",
+    "src":"assets/characters/alert_2.png",
+});
+var fightChar = $("<img>").attr({
+    "id":"fighter",
+    "src":"assets/characters/alert_2.png",
+});
+var rangChar = $("<img>").attr({
+    "id":"ranger",
+    "src":"assets/characters/alert_2.png",
+});
+var palaChar = $("<img>").attr({
+    "id":"paladin",
+    "src":"assets/characters/alert_2.png",
+});
+var characterFrame = $("<figure>").attr({
+    "class":"character",
+});
+var mainCharacter = $("<figcaption>").attr({
+    "id":"main_character",
+});
+var enemyCharacter = $("<figcaption>").attr({
+    "id":"enemy_character",
+});
 
