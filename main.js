@@ -193,6 +193,11 @@ var isEnemyFighter = true;
 var isEnemyRanger = true;
 var isEnemyPaladin = true;
 
+var isWizardActiveEnemy = false;
+var isFighterActiveEnemy = false;
+var isRangerActiveEnemy = false;
+var isPaladinActiveEnemy = false;
+
 $(wizChar).on("click",function(){
     if(isMCSelected==false){
         $("#MC").prepend(wizChar);
@@ -242,7 +247,16 @@ $(palaChar).on("click",function(){
     }
 });
 //--------------------select enemies-----------------------
+var enemyArray = [isMCWizard,isMCFighter,isMCRanger,isMCPaladin];
 
+function selectEnemy(){
+    var enemyArrayArray = enemyArray;
+    for(var i=0; i<enemyArrayArray.length; i++){
+        if(enemyArrayArray[i]==true){
+            enemyArrayArray = enemyArrayArray.splice(pos,i);
+        }
+    }
+}
 //--------------------reset the game-----------------------
 function resetGame(){
     var confirmReset = confirm("Reset the game?");
@@ -289,6 +303,11 @@ function gameReset(){
     isEnemyPaladin = true;
     isEnemyRanger = true;
     isEnemyWizard = true;
+    
+    isWizardActiveEnemy = false;
+    isFighterActiveEnemy = false;
+    isRangerActiveEnemy = false;
+    isPaladinActiveEnemy = false;
 
     $("#mainCharacter").text("");
 }
