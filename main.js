@@ -182,11 +182,25 @@ window.onload = function startGame(){
 
 //-------------------character data---------------------
 var isMCSelected = false;
+
+var isMCWizard = false;
+var isMCFighter = false;
+var isMCRanger = false;
+var isMCPaladin = false;
+
+var isEnemyWizard = true;
+var isEnemyFighter = true;
+var isEnemyRanger = true;
+var isEnemyPaladin = true;
+
 $(wizChar).on("click",function(){
     if(isMCSelected==false){
         $("#MC").prepend(wizChar);
         $("#combatLogTop").text("Selected Wizard! Get ready for combat");
+        $("#mainCharacter").text("HP:"+wizard.HP+" XP:"+wizard.XP);
         isMCSelected = true;
+        isMCWizard = true;
+        isEnemyWizard = false;
     } else {
         $("#combatLogBottom").text("Character is already selected! Choose someone else");
     }
@@ -195,7 +209,10 @@ $(fightChar).on("click",function(){
     if(isMCSelected==false){
         $("#MC").prepend(fightChar);
         $("#combatLogTop").text("Selected Fighter! Get ready for combat");
+        $("#mainCharacter").text("HP:"+fighter.HP+" XP:"+fighter.XP);
         isMCSelected = true;
+        isMCFighter = true;
+        isEnemyFighter = false;
     } else {
         $("#combatLogBottom").text("Character is already selected! Choose someone else");
     }
@@ -204,7 +221,10 @@ $(rangChar).on("click",function(){
     if(isMCSelected==false){
         $("#MC").prepend(rangChar);
         $("#combatLogTop").text("Selected Ranger! Get ready for combat");
+        $("#mainCharacter").text("HP:"+ranger.HP+" XP:"+ranger.XP);
         isMCSelected = true;
+        isMCRanger = true;
+        isEnemyRanger = false;
     } else {
         $("#combatLogBottom").text("Character is already selected! Choose someone else");
     }
@@ -213,13 +233,15 @@ $(palaChar).on("click",function(){
     if(isMCSelected==false){
         $("#MC").prepend(palaChar);
         $("#combatLogTop").text("Selected Paladin! Get ready for combat");
+        $("#mainCharacter").text("HP:"+paladin.HP+" XP:"+paladin.XP);
         isMCSelected = true;
+        isMCPaladin = true;
+        isEnemyPaladin = false;
     } else {
         $("#combatLogBottom").text("Character is already selected! Choose someone else");
     }
 });
-//--------------------character stats----------------------
-
+//--------------------select enemies-----------------------
 
 //--------------------reset the game-----------------------
 function resetGame(){
@@ -255,4 +277,18 @@ function gameReset(){
 
     paladin.HP = 90;
     paladin.XP = 0;
+
+    isMCSelected = false;
+
+    isMCWizard = false;
+    isMCFighter = false;
+    isMCRanger = false;
+    isMCPaladin = false;
+
+    isEnemyFighter = true;
+    isEnemyPaladin = true;
+    isEnemyRanger = true;
+    isEnemyWizard = true;
+
+    $("#mainCharacter").text("");
 }
