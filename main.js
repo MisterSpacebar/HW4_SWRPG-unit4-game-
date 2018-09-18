@@ -317,7 +317,7 @@ function selectEnemy(){
     activeEnemy[randomEnemy] = true;
     badBoi = charactersArray[randomEnemy]; //--- new enemy
     $("#bigBad").prepend(characterSprites[randomEnemy]); //---pushes enemy into window
-    if(activeEnemy[randomEnemy]==true){
+    if(activeEnemy[randomEnemy]==true){ //---removes selected enemy from characters panel
         removeFromArray(enemyArray,randomEnemy);
         removeFromArray(activeEnemy,randomEnemy);
         removeFromArray(charactersArray,randomEnemy);
@@ -349,7 +349,7 @@ function doCombat(goodAB,goodAC,goodATK,badAB,badAC,badATK){
         $("#enemyCharacter").text("HP:"+badBoi.HP);
 
         if(badBoi.HP<1){
-            $("#hideStuff").prepend(charactersArray[tempVar]);
+            $("#hideStuff").prepend(charactersSprites[tempVar]);
             selectEnemy();
         }
     }
