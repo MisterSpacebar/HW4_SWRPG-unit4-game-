@@ -218,6 +218,7 @@ var isFighterActiveEnemy = false;
 var isRangerActiveEnemy = false;
 var isPaladinActiveEnemy = false;
 //---character selection---
+var goodBoi = {}; //---holds for main character
 $(wizChar).on("click",function(){ //---wizard
     if(isMCSelected==false){
         $("#MC").prepend(wizChar);
@@ -226,6 +227,7 @@ $(wizChar).on("click",function(){ //---wizard
         isMCSelected = true;
         isMCWizard = true;
         isEnemyWizard = false;
+        goodBoi = wizard;
     } else {
         $("#combatLogBottom").text("A character is already selected!");
     }
@@ -238,6 +240,7 @@ $(fightChar).on("click",function(){ //---fighter
         isMCSelected = true;
         isMCFighter = true;
         isEnemyFighter = false;
+        goodBoi = fighter;
     } else {
         $("#combatLogBottom").text("A character is already selected!");
     }
@@ -250,6 +253,7 @@ $(rangChar).on("click",function(){ //---ranger
         isMCSelected = true;
         isMCRanger = true;
         isEnemyRanger = false;
+        goodBoi = ranger;
     } else {
         $("#combatLogBottom").text("A character is already selected!");
     }
@@ -262,24 +266,25 @@ $(palaChar).on("click",function(){ //---paladin
         isMCSelected = true;
         isMCPaladin = true;
         isEnemyPaladin = false;
+        goodBoi = paladin;
     } else {
         $("#combatLogBottom").text("A character is already selected!");
     }
 });
 //--------------------select enemies-----------------------
 var enemyArray = [isMCWizard,isMCFighter,isMCRanger,isMCPaladin];
-var activeEnemy = [isPaladinActiveEnemy,isFighterActiveEnemy,isRangerActiveEnemy,isWizardActiveEnemy];
-
+var activeEnemy = [isWizardActiveEnemy,isFighterActiveEnemy,isRangerActiveEnemy,isPaladinActiveEnemy];
 
 function selectEnemy(){
-    var enemyArrayArray = enemyArray;
-    for(var i=0; i<enemyArrayArray.length; i++){
-        if(enemyArrayArray[i]==true){ //---pops out player character
-            enemyArrayArray = enemyArrayArray.splice(pos,i);
+    for(var i=0; i<enemyArray.length; i++){
+        if(enemyArray[i]==true){ //---pops out player character
+            enemyArray = enemyArray.splice(pos,i);
+            activeEnemy = activeEnemy.splice(pos,i);
+
         }
     }
-
-    var enemyMan = enemyArrayArray[RNG(enemyArrayArray.length)];
+    var randomEnemy = RNG(activeEnemy.length);
+    var enemyMan = activeEnemy[randomEnemy];
     
 }
 
@@ -332,6 +337,9 @@ function gameReset(){
     isFighterActiveEnemy = false;
     isRangerActiveEnemy = false;
     isPaladinActiveEnemy = false;
+    
+    enemyArray = [isMCWizard,isMCFighter,isMCRanger,isMCPaladin];
+    activeEnemy = [isWizardActiveEnemy,isFighterActiveEnemy,isRangerActiveEnemy,isPaladinActiveEnemy];
 }
 $("#resetButton").on("click",function(){
     resetGame();
