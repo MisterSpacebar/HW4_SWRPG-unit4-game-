@@ -359,6 +359,8 @@ function doCombat(goodAB,goodAC,goodATK,badAB,badAC,badATK){
 function resetGame(){
     var confirmReset = confirm("New game?");
     if(confirmReset==true){
+        location.reload(); 
+    } else {
         gameReset();
         newGame();
     }
