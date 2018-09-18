@@ -236,6 +236,7 @@ $(wizChar).on("click",function(){ //---wizard
         $("#MC").prepend($(wizChar).attr("src","assets/characters/wizardRight.png"));
         $("#combatLogTop").text("Selected Wizard! Get ready for combat");
         $("#mainCharacter").text("HP:"+goodBoi.HP+" XP:"+goodBoi.XP);
+        selectEnemy();
     } else {
         $("#combatLogBottom").text("A character is already selected!");
     }
@@ -249,6 +250,7 @@ $(fightChar).on("click",function(){ //---fighter
         $("#MC").prepend($(fightChar).attr("src","assets/characters/fighterRight.png"));
         $("#combatLogTop").text("Selected Fighter! Get ready for combat");
         $("#mainCharacter").text("HP:"+goodBoi.HP+" XP:"+goodBoi.XP);
+        selectEnemy();
     } else {
         $("#combatLogBottom").text("A character is already selected!");
     }
@@ -262,6 +264,7 @@ $(rangChar).on("click",function(){ //---ranger
         $("#MC").prepend($(rangChar).attr("src","assets/characters/rangerRight.png"));
         $("#combatLogTop").text("Selected Ranger! Get ready for combat");
         $("#mainCharacter").text("HP:"+goodBoi.HP+" XP:"+goodBoi.XP);
+        selectEnemy();
     } else {
         $("#combatLogBottom").text("A character is already selected!");
     }
@@ -275,6 +278,7 @@ $(palaChar).on("click",function(){ //---paladin
         $("#MC").prepend($(palaChar).attr("src","assets/characters/paladinRight.png"));
         $("#combatLogTop").text("Selected Paladin! Get ready for combat");
         $("#mainCharacter").text("HP:"+goodBoi.HP+" XP:"+goodBoi.XP);
+        selectEnemy();
     } else {
         $("#combatLogBottom").text("A character is already selected!");
     }
@@ -333,6 +337,10 @@ function doCombat(goodAB,goodAC,goodATK,badAB,badAC,badATK){
     if(badBoi.HP>0){
         badBoi.HP = (badBoi.HP-combatCheck(goodBoi.AB,badBoi.AC,goodBoi.ATK()));
         $("#enemyCharacter").text("HP:"+badBoi.HP);
+
+        if(badBoi.HP<1){
+            selectEnemy();
+        }
     }
 }
 
