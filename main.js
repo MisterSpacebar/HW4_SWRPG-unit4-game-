@@ -2,9 +2,9 @@
 function coinFlip(){
     var coin = Math.floor(Math.random()*6)+1;
     if(coin>3){
-        return "heads";
+        return true;
     } else {
-        return "tails";
+        return false;
     }
 }
 function d4(){
