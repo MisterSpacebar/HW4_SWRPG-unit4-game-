@@ -28,3 +28,9 @@ figcaption {
 #hideStuff {
     display: none;
 }
+
+#MC {
+    position: absolute;
+    left: 175px;
+    top: -20px;
+}

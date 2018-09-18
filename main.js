@@ -195,18 +195,7 @@ window.onload = function startGame(){
 
     $("#combatLogTop").text("Select a character");
 }
-if(wizard.HP<1){
-    $("#hideStuff").append(wizChar);
-}
-if(fighter.HP<1){
-    $("#hideStuff").append(fightChar);
-}
-if(ranger.HP<1){
-    $("#hideStuff").append(rangChar);
-}
-if(paladin.HP<1){
-    $("#hideStuff").append(palaChar);
-}
+
 
 //-------------------character data---------------------
 var isMCSelected = false;
@@ -289,7 +278,8 @@ var activeEnemy = [isWizardActiveEnemy,isFighterActiveEnemy,isRangerActiveEnemy,
 var charactersArray = [wizard,fighter,ranger,paladin];
 var characterSprites = [wizChar,fightChar,rangChar,palaChar];
 var badBoi = {};
-var tempVar = 0;
+var randomEnemy = 0;
+var tempGuy = {};
 
 function removeFromArray(arrayIn, itemPosition){ //---pushes something out of the array and returns the rest
     var tempArray = arrayIn;
@@ -300,28 +290,31 @@ function removeFromArray(arrayIn, itemPosition){ //---pushes something out of th
             newArray.push(tempArray[x]);
         }
     }
-    arrayIn = newArray; //---does this change the original array?
+    return newArray;
 }
 function selectEnemy(){
     for(var i=0; i<enemyArray.length; i++){
         if(enemyArray[i]==true){ //---pops out player character
-            removeFromArray(enemyArray,i);
-            removeFromArray(activeEnemy,i);
-            removeFromArray(charactersArray,i);
-            removeFromArray(characterSprites,i);
+            enemyArray = removeFromArray(enemyArray,i);
+            activeEnemy = removeFromArray(activeEnemy,i);
+            charactersArray = removeFromArray(charactersArray,i);
+            characterSprites = removeFromArray(characterSprites,i);
         }
     }
     //---declare new enemy
-    var randomEnemy = RNG(charactersArray.length);
-    tempVar = randomEnemy;
+    randomEnemy = RNG(charactersArray.length);
     activeEnemy[randomEnemy] = true;
     badBoi = charactersArray[randomEnemy]; //--- new enemy
+    tempGuy = charactersArray[randomEnemy];
     $("#bigBad").prepend(characterSprites[randomEnemy]); //---pushes enemy into window
+}
+
+function removeEnemy(){
     if(activeEnemy[randomEnemy]==true){ //---removes selected enemy from characters panel
-        removeFromArray(enemyArray,randomEnemy);
-        removeFromArray(activeEnemy,randomEnemy);
-        removeFromArray(charactersArray,randomEnemy);
-        removeFromArray(characterSprites,randomEnemy);
+        enemyArray = removeFromArray(enemyArray,randomEnemy);
+        activeEnemy = removeFromArray(activeEnemy,randomEnemy);
+        charactersArray = removeFromArray(charactersArray,randomEnemy);
+        characterSprites = removeFromArray(characterSprites,randomEnemy);
     }
 }
 
@@ -330,27 +323,27 @@ $("#attackButton").on("click",function(){
     doCombat();
 });
 
-function doCombat(goodAB,goodAC,goodATK,badAB,badAC,badATK){
-    if(goodBoi.HP>0){
-        goodBoi.HP = (goodBoi.HP-counterAttack(badBoi.cAB,goodBoi.AC,badBoi.cATK()));
-        $("#mainCharacter").text("HP:"+goodBoi.HP+" XP:"+goodBoi.XP);
-
-        if(goodBoi.HP<1){ //---when PC dies
-            alert("You lost!");
-            resetGame();
+function doCombat(){
+    if(badBoi.HP>0){ //---changes NPC HP based on PC attack
+        badBoi.HP = (badBoi.HP-combatCheck(goodBoi.AB,badBoi.AC,goodBoi.ATK()));
+        $("#enemyCharacter").text("HP:"+badBoi.HP);
+        if(badBoi.HP<1){
+            $("#enemyCharacter").text(" ");
+            $(characterSprites[randomEnemy]).remove();
+            selectEnemy();
+            removeEnemy();
         }
-    } else if(goodBoi.HP<1){
-        alert("You lost!");
+    } else if(characterSprites.length==0){
+        alert("You win!");
         resetGame();
     }
 
-    if(badBoi.HP>0){
-        badBoi.HP = (badBoi.HP-combatCheck(goodBoi.AB,badBoi.AC,goodBoi.ATK()));
-        $("#enemyCharacter").text("HP:"+badBoi.HP);
-
-        if(badBoi.HP<1){
-            $("#hideStuff").prepend(charactersSprites[tempVar]);
-            selectEnemy();
+    if(goodBoi.HP>0){ //---changes PC HP based on NPC counterattack
+        goodBoi.HP = (goodBoi.HP-counterAttack(badBoi.cAB,goodBoi.AC,badBoi.cATK()));
+        $("#mainCharacter").text("HP:"+goodBoi.HP+" XP:"+goodBoi.XP);
+        if(goodBoi.HP<1){
+            alert("You lost!");
+            resetGame();
         }
     }
 }
@@ -379,7 +372,7 @@ function newGame(){
 function gameReset(){
     goodBoi = {};
     badBoi = {};
-    tempVar = 0;
+    randomEnemy = 0;
 
     wizard.HP = 40;
     wizard.XP = 0;
