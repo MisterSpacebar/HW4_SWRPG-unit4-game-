@@ -31,6 +31,10 @@ function d20(){
     var roll20 = Math.floor(Math.random()*20)+1;
     return roll20;
 }
+function RNG(upperBound){
+    var randomNumber = Math.floor(Math.random()*upperBound);
+    return randomNumber;
+}
 
 //-----------characters------------
 var wizard = {
@@ -273,6 +277,10 @@ function selectEnemy(){
         if(enemyArrayArray[i]==true){ //---pops out player character
             enemyArrayArray = enemyArrayArray.splice(pos,i);
         }
+    }
+
+    for(var j=0; j<enemyArrayArray.length; j++){
+        
     }
 }
 
