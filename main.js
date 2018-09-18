@@ -287,6 +287,7 @@ $(palaChar).on("click",function(){ //---paladin
 var enemyArray = [isMCWizard,isMCFighter,isMCRanger,isMCPaladin];
 var activeEnemy = [isWizardActiveEnemy,isFighterActiveEnemy,isRangerActiveEnemy,isPaladinActiveEnemy];
 var charactersArray = [wizard,fighter,ranger,paladin];
+var characterSprites = [wizChar,fightChar,rangChar,palaChar];
 var badBoi = {};
 
 function removeFromArray(arrayIn, itemPosition){ //---pushes something out of the array and returns the rest
@@ -295,7 +296,7 @@ function removeFromArray(arrayIn, itemPosition){ //---pushes something out of th
     var newArray = [];
     for(var x=0; x<tempArray.length; x++){
         if(tempArray[x]!==null){
-            newArray.push(tempArray[i]);
+            newArray.push(tempArray[x]);
         }
     }
     arrayIn = newArray; //---does this change the original array?
@@ -306,13 +307,20 @@ function selectEnemy(){
             removeFromArray(enemyArray,i);
             removeFromArray(activeEnemy,i);
             removeFromArray(charactersArray,i);
+            removeFromArray(characterSprites,i);
         }
     }
     //---declare new enemy
     var randomEnemy = RNG(charactersArray.length);
     activeEnemy[randomEnemy] = true;
-    badBoi = charactersArray[randomEnemy];
-    removeFromArray(charactersArray,randomEnemy);
+    badBoi = charactersArray[randomEnemy]; //--- new enemy
+    $("#bigBad").prepend(characterSprites[randomEnemy]); //---pushes enemy into window
+    if(activeEnemy[randomEnemy]==true){
+        removeFromArray(enemyArray,randomEnemy);
+        removeFromArray(activeEnemy,randomEnemy);
+        removeFromArray(charactersArray,randomEnemy);
+        removeFromArray(characterSprites,randomEnemy);
+    }
 }
 
 //--------------------combat button------------------------
