@@ -364,8 +364,6 @@ function resetGame(){
     }
 }
 function newGame(){
-    isMCSelected = false;
-
     $("#selectionScreen").append(wizChar);
     $("#selectionScreen").append(fightChar);
     $("#selectionScreen").append(rangChar);
@@ -377,6 +375,10 @@ function newGame(){
     $("#enemyCharacter").text("");
 }
 function gameReset(){
+    goodBoi = {};
+    badBoi = {};
+    tempVar = 0;
+
     wizard.HP = 40;
     wizard.XP = 0;
 
@@ -409,6 +411,7 @@ function gameReset(){
     enemyArray = [isMCWizard,isMCFighter,isMCRanger,isMCPaladin];
     activeEnemy = [isWizardActiveEnemy,isFighterActiveEnemy,isRangerActiveEnemy,isPaladinActiveEnemy];
     charactersArray = [wizard,fighter,ranger,paladin];
+    characterSprites = [wizChar,fightChar,rangChar,palaChar];
 }
 $("#resetButton").on("click",function(){
     resetGame();
