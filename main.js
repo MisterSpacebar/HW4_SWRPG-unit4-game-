@@ -227,7 +227,7 @@ $(wizChar).on("click",function(){ //---wizard
         isMCWizard = true;
         isEnemyWizard = false;
     } else {
-        $("#combatLogBottom").text("Character is already selected! Choose someone else");
+        $("#combatLogBottom").text("A character is already selected!");
     }
 });
 $(fightChar).on("click",function(){ //---fighter
@@ -239,7 +239,7 @@ $(fightChar).on("click",function(){ //---fighter
         isMCFighter = true;
         isEnemyFighter = false;
     } else {
-        $("#combatLogBottom").text("Character is already selected! Choose someone else");
+        $("#combatLogBottom").text("A character is already selected!");
     }
 });
 $(rangChar).on("click",function(){ //---ranger
@@ -251,7 +251,7 @@ $(rangChar).on("click",function(){ //---ranger
         isMCRanger = true;
         isEnemyRanger = false;
     } else {
-        $("#combatLogBottom").text("Character is already selected! Choose someone else");
+        $("#combatLogBottom").text("A character is already selected!");
     }
 });
 $(palaChar).on("click",function(){ //---paladin
@@ -263,7 +263,7 @@ $(palaChar).on("click",function(){ //---paladin
         isMCPaladin = true;
         isEnemyPaladin = false;
     } else {
-        $("#combatLogBottom").text("Character is already selected! Choose someone else");
+        $("#combatLogBottom").text("A character is already selected!");
     }
 });
 //--------------------select enemies-----------------------
@@ -279,9 +279,8 @@ function selectEnemy(){
         }
     }
 
-    for(var j=0; j<enemyArrayArray.length; j++){
-        
-    }
+    var enemyMan = enemyArrayArray[RNG(enemyArrayArray.length)];
+    
 }
 
 //--------------------reset the game-----------------------
