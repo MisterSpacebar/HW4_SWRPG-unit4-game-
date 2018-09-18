@@ -294,7 +294,7 @@ function removeFromArray(arrayIn, itemPosition){ //---pushes something out of th
     tempArray[itemPosition] = null;
     var newArray = [];
     for(var x=0; x<tempArray.length; x++){
-        if(tempArray[i]!==null){
+        if(tempArray[x]!==null){
             newArray.push(tempArray[i]);
         }
     }
