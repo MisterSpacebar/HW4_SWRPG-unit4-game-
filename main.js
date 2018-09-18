@@ -347,6 +347,7 @@ function doCombat(goodAB,goodAC,goodATK,badAB,badAC,badATK){
         $("#enemyCharacter").text("HP:"+badBoi.HP);
 
         if(badBoi.HP<1){
+            $("#hideStuff").prepend(badBoi);
             selectEnemy();
         }
     }
