@@ -289,6 +289,7 @@ var activeEnemy = [isWizardActiveEnemy,isFighterActiveEnemy,isRangerActiveEnemy,
 var charactersArray = [wizard,fighter,ranger,paladin];
 var characterSprites = [wizChar,fightChar,rangChar,palaChar];
 var badBoi = {};
+var tempVar = 0;
 
 function removeFromArray(arrayIn, itemPosition){ //---pushes something out of the array and returns the rest
     var tempArray = arrayIn;
@@ -312,6 +313,7 @@ function selectEnemy(){
     }
     //---declare new enemy
     var randomEnemy = RNG(charactersArray.length);
+    tempVar = randomEnemy;
     activeEnemy[randomEnemy] = true;
     badBoi = charactersArray[randomEnemy]; //--- new enemy
     $("#bigBad").prepend(characterSprites[randomEnemy]); //---pushes enemy into window
@@ -347,7 +349,7 @@ function doCombat(goodAB,goodAC,goodATK,badAB,badAC,badATK){
         $("#enemyCharacter").text("HP:"+badBoi.HP);
 
         if(badBoi.HP<1){
-            $("#hideStuff").prepend(badBoi);
+            $("#hideStuff").prepend(charactersArray[tempVar]);
             selectEnemy();
         }
     }
