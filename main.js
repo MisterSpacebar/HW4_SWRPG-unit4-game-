@@ -74,7 +74,7 @@ var ranger = {
     cAB: 7,
     XP: 0,
     ATK: function(){
-        var tempDMG = d6();
+        var tempDMG = d8();
         return tempDMG+ranger.AB-1;
     },
     cATK: function(){
