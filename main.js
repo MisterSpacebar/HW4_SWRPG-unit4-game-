@@ -44,10 +44,12 @@ var wizard = {
     cAB: 20,
     XP: 0,
     ATK: function(){
-        return d4();
+        var tempDMG = (d4()+d4()+d4());
+        return tempDMG;
     },
     cATK: function(){
-        return d4();
+        var tempDMG = (d4()+d4());
+        return tempDMG-1;
     }
 };
 var fighter = {
@@ -57,10 +59,12 @@ var fighter = {
     cAB: 4,
     XP: 0,
     ATK: function(){
-        return d8();
+        var tempDMG = d10();
+        return tempDMG;
     },
     cATK: function(){
-        return d8();
+        var tempDMG = d8();
+        return tempDMG;
     },
 };
 var ranger = {
@@ -70,10 +74,12 @@ var ranger = {
     cAB: 7,
     XP: 0,
     ATK: function(){
-        return d6()+1
+        var tempDMG = d6();
+        return tempDMG+ranger.AB-1;
     },
     cATK: function(){
-        return d6();
+        var tempDMG = d6();
+        return tempDMG+1;
     },
 };
 var paladin = {
@@ -83,10 +89,12 @@ var paladin = {
     cAB: 0,
     XP: 0,
     ATK: function(){
-        return d12();
+        var tempDMG = d12();
+        return tempDMG;
     },
     cATK: function(){
-        return d10();
+        var tempDMG = d10();
+        return tempDMG;
     },
 };
 
@@ -150,22 +158,22 @@ function counterAttack(counterBonus,armorClass,damage){ //--- return damage
 var wizChar = $("<img>").attr({
     "class":"player-characters",
     "id":"wizard",
-    "src":"assets/characters/alert_2.png",
+    "src":"assets/characters/wizardLeft.png",
 });
 var fightChar = $("<img>").attr({
     "class":"player-characters",
     "id":"fighter",
-    "src":"assets/characters/alert_2.png",
+    "src":"assets/characters/fighterLeft.png",
 });
 var rangChar = $("<img>").attr({
     "class":"player-characters",
     "id":"ranger",
-    "src":"assets/characters/alert_2.png",
+    "src":"assets/characters/rangerLeft.png",
 });
 var palaChar = $("<img>").attr({
     "class":"player-characters",
     "id":"paladin",
-    "src":"assets/characters/alert_2.png",
+    "src":"assets/characters/paladinLeft.png",
 });
 var characterFrame = $("<figure>").attr({
     "class":"character",
@@ -221,52 +229,52 @@ var isPaladinActiveEnemy = false;
 var goodBoi = {}; //---holds for main character
 $(wizChar).on("click",function(){ //---wizard
     if(isMCSelected==false){
-        $("#MC").prepend(wizChar);
-        $("#combatLogTop").text("Selected Wizard! Get ready for combat");
-        $("#mainCharacter").text("HP:"+wizard.HP+" XP:"+wizard.XP);
         isMCSelected = true;
         isMCWizard = true;
         isEnemyWizard = false;
         goodBoi = wizard;
+        $("#MC").prepend($(wizChar).attr("src","assets/characters/wizardRight.png"));
+        $("#combatLogTop").text("Selected Wizard! Get ready for combat");
+        $("#mainCharacter").text("HP:"+goodBoi.HP+" XP:"+goodBoi.XP);
     } else {
         $("#combatLogBottom").text("A character is already selected!");
     }
 });
 $(fightChar).on("click",function(){ //---fighter
     if(isMCSelected==false){
-        $("#MC").prepend(fightChar);
-        $("#combatLogTop").text("Selected Fighter! Get ready for combat");
-        $("#mainCharacter").text("HP:"+fighter.HP+" XP:"+fighter.XP);
         isMCSelected = true;
         isMCFighter = true;
         isEnemyFighter = false;
         goodBoi = fighter;
+        $("#MC").prepend($(fightChar).attr("src","assets/characters/fighterRight.png"));
+        $("#combatLogTop").text("Selected Fighter! Get ready for combat");
+        $("#mainCharacter").text("HP:"+goodBoi.HP+" XP:"+goodBoi.XP);
     } else {
         $("#combatLogBottom").text("A character is already selected!");
     }
 });
 $(rangChar).on("click",function(){ //---ranger
     if(isMCSelected==false){
-        $("#MC").prepend(rangChar);
-        $("#combatLogTop").text("Selected Ranger! Get ready for combat");
-        $("#mainCharacter").text("HP:"+ranger.HP+" XP:"+ranger.XP);
         isMCSelected = true;
         isMCRanger = true;
         isEnemyRanger = false;
         goodBoi = ranger;
+        $("#MC").prepend($(rangChar).attr("src","assets/characters/rangerRight.png"));
+        $("#combatLogTop").text("Selected Ranger! Get ready for combat");
+        $("#mainCharacter").text("HP:"+goodBoi.HP+" XP:"+goodBoi.XP);
     } else {
         $("#combatLogBottom").text("A character is already selected!");
     }
 });
 $(palaChar).on("click",function(){ //---paladin
     if(isMCSelected==false){
-        $("#MC").prepend(palaChar);
-        $("#combatLogTop").text("Selected Paladin! Get ready for combat");
-        $("#mainCharacter").text("HP:"+paladin.HP+" XP:"+paladin.XP);
         isMCSelected = true;
         isMCPaladin = true;
         isEnemyPaladin = false;
         goodBoi = paladin;
+        $("#MC").prepend($(palaChar).attr("src","assets/characters/paladinRight.png"));
+        $("#combatLogTop").text("Selected Paladin! Get ready for combat");
+        $("#mainCharacter").text("HP:"+goodBoi.HP+" XP:"+goodBoi.XP);
     } else {
         $("#combatLogBottom").text("A character is already selected!");
     }
@@ -274,23 +282,63 @@ $(palaChar).on("click",function(){ //---paladin
 //--------------------select enemies-----------------------
 var enemyArray = [isMCWizard,isMCFighter,isMCRanger,isMCPaladin];
 var activeEnemy = [isWizardActiveEnemy,isFighterActiveEnemy,isRangerActiveEnemy,isPaladinActiveEnemy];
+var charactersArray = [wizard,fighter,ranger,paladin];
+var badBoi = {};
 
+function removeFromArray(arrayIn, itemPosition){ //---pushes something out of the array and returns the rest
+    var tempArray = arrayIn;
+    tempArray[itemPosition] = null;
+    var newArray = [];
+    for(var x=0; x<tempArray.length; x++){
+        if(tempArray[i]!==null){
+            newArray.push(tempArray[i]);
+        }
+    }
+    arrayIn = newArray; //---does this change the original array?
+}
 function selectEnemy(){
     for(var i=0; i<enemyArray.length; i++){
         if(enemyArray[i]==true){ //---pops out player character
-            enemyArray = enemyArray.splice(pos,i);
-            activeEnemy = activeEnemy.splice(pos,i);
-
+            removeFromArray(enemyArray,i);
+            removeFromArray(activeEnemy,i);
+            removeFromArray(charactersArray,i);
         }
     }
-    var randomEnemy = RNG(activeEnemy.length);
-    var enemyMan = activeEnemy[randomEnemy];
-    
+    //---declare new enemy
+    var randomEnemy = RNG(charactersArray.length);
+    activeEnemy[randomEnemy] = true;
+    badBoi = charactersArray[randomEnemy];
+    removeFromArray(charactersArray,randomEnemy);
+}
+
+//--------------------combat button------------------------
+$("#attackButton").on("click",function(){
+    doCombat();
+});
+
+function doCombat(goodAB,goodAC,goodATK,badAB,badAC,badATK){
+    if(goodBoi.HP>0){
+        goodBoi.HP = (goodBoi.HP-counterAttack(badBoi.cAB,goodBoi.AC,badBoi.cATK()));
+        $("#mainCharacter").text("HP:"+goodBoi.HP+" XP:"+goodBoi.XP);
+
+        if(goodBoi.HP<1){ //---when PC dies
+            alert("You lost!");
+            resetGame();
+        }
+    } else if(goodBoi.HP<1){
+        alert("You lost!");
+        resetGame();
+    }
+
+    if(badBoi.HP>0){
+        badBoi.HP = (badBoi.HP-combatCheck(goodBoi.AB,badBoi.AC,goodBoi.ATK()));
+        $("#enemyCharacter").text("HP:"+badBoi.HP);
+    }
 }
 
 //--------------------reset the game-----------------------
 function resetGame(){
-    var confirmReset = confirm("Reset the game?");
+    var confirmReset = confirm("New game?");
     if(confirmReset==true){
         gameReset();
         newGame();
@@ -307,6 +355,7 @@ function newGame(){
     $("#combatLogTop").text("Select a character");
     $("#combatLogBottom").text("");
     $("#mainCharacter").text("");
+    $("#enemyCharacter").text("");
 }
 function gameReset(){
     wizard.HP = 40;
@@ -340,6 +389,7 @@ function gameReset(){
     
     enemyArray = [isMCWizard,isMCFighter,isMCRanger,isMCPaladin];
     activeEnemy = [isWizardActiveEnemy,isFighterActiveEnemy,isRangerActiveEnemy,isPaladinActiveEnemy];
+    charactersArray = [wizard,fighter,ranger,paladin];
 }
 $("#resetButton").on("click",function(){
     resetGame();
