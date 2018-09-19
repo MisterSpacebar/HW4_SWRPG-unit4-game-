@@ -344,12 +344,12 @@ function doCombat(){
 function resetGame(){
     var confirmReset = confirm("New game?");
     if(confirmReset==true){
-        location.reload(); 
-    } else {
-        gameReset();
-        newGame();
-        location.reload();
-    }
+        location.reload(); }
+    // } else {
+    //     gameReset();
+    //     newGame();
+    //     location.reload();
+    // }
 }
 function newGame(){
     $("#selectionScreen").append(wizChar);
