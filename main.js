@@ -344,7 +344,8 @@ function doCombat(){
 function resetGame(){
     var confirmReset = confirm("New game?");
     if(confirmReset==true){
-        location.reload(); }
+        location.reload(); 
+    }
     // } else {
     //     gameReset();
     //     newGame();
