@@ -38,13 +38,13 @@ function RNG(upperBound){
 
 //-----------characters------------
 var wizard = {
-    HP: 40,
+    HP: 50,
     AC: 12,
     AB: 20,
     cAB: 20,
     XP: 0,
     ATK: function(){
-        var tempDMG = (d4()+d4()+d4());
+        var tempDMG = (d4()+d4()+(this.XP*d4()));
         return tempDMG;
     },
     cATK: function(){
@@ -59,7 +59,7 @@ var fighter = {
     cAB: 4,
     XP: 0,
     ATK: function(){
-        var tempDMG = d10();
+        var tempDMG = d10()+(this.XP);
         return tempDMG;
     },
     cATK: function(){
@@ -70,12 +70,12 @@ var fighter = {
 var ranger = {
     HP: 60,
     AC: 15,
-    AB: 3,
+    AB: 3+(this.XP),
     cAB: 7,
     XP: 0,
     ATK: function(){
-        var tempDMG = d8();
-        return tempDMG+ranger.AB-1;
+        var tempDMG = d8()+(this.AB-1);
+        return tempDMG;
     },
     cATK: function(){
         var tempDMG = d6();
@@ -84,7 +84,7 @@ var ranger = {
 };
 var paladin = {
     HP: 90,
-    AC: 13,
+    AC: 13+(this.XP*2),
     AB: 3,
     cAB: 0,
     XP: 0,
@@ -328,6 +328,8 @@ function doCombat(){
         badBoi.HP = (badBoi.HP-combatCheck(goodBoi.AB,badBoi.AC,goodBoi.ATK()));
         $("#enemyCharacter").text("HP:"+badBoi.HP);
         if(badBoi.HP<1){
+            goodBoi.HP = (goodBoi.HP+25);
+            goodBoi.XP++;
             $("#enemyCharacter").text(" ");
             $(characterSprites[randomEnemy]).remove();
             selectEnemy();
@@ -356,6 +358,7 @@ function resetGame(){
     } else {
         gameReset();
         newGame();
+        location.reload();
     }
 }
 function newGame(){
@@ -374,7 +377,7 @@ function gameReset(){
     badBoi = {};
     randomEnemy = 0;
 
-    wizard.HP = 40;
+    wizard.HP = 50;
     wizard.XP = 0;
 
     fighter.HP = 70;
