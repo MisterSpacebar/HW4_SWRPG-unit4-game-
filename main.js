@@ -279,7 +279,6 @@ var charactersArray = [wizard,fighter,ranger,paladin];
 var characterSprites = [wizChar,fightChar,rangChar,palaChar];
 var badBoi = {};
 var randomEnemy = 0;
-var tempGuy = {};
 
 function removeFromArray(arrayIn, itemPosition){ //---pushes something out of the array and returns the rest
     var tempArray = arrayIn;
