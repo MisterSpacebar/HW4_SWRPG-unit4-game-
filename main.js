@@ -175,15 +175,6 @@ var palaChar = $("<img>").attr({
     "id":"paladin",
     "src":"assets/characters/paladinLeft.png",
 });
-var characterFrame = $("<figure>").attr({
-    "class":"character",
-});
-var mainCharacter = $("<figcaption>").attr({
-    "id":"main_character",
-});
-var enemyCharacter = $("<figcaption>").attr({
-    "id":"enemy_character",
-});
 
 //--------------------set the game----------------------
 window.onload = function startGame(){
