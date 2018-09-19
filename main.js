@@ -206,7 +206,7 @@ var isFighterActiveEnemy = false;
 var isRangerActiveEnemy = false;
 var isPaladinActiveEnemy = false;
 //---character selection---
-var goodBoi = {}; //---holds for main character
+var goodBoi = {}; //---shell for main character
 $(wizChar).on("click",function(){ //---wizard
     if(isMCSelected==false){
         isMCSelected = true;
@@ -268,8 +268,8 @@ var enemyArray = [isMCWizard,isMCFighter,isMCRanger,isMCPaladin];
 var activeEnemy = [isWizardActiveEnemy,isFighterActiveEnemy,isRangerActiveEnemy,isPaladinActiveEnemy];
 var charactersArray = [wizard,fighter,ranger,paladin];
 var characterSprites = [wizChar,fightChar,rangChar,palaChar];
-var badBoi = {};
-var randomEnemy = 0;
+var badBoi = {}; //---shell for enemy character
+var randomEnemy = 0; //---"current" enemy
 
 function removeFromArray(arrayIn, itemPosition){ //---pushes something out of the array and returns the rest
     var tempArray = arrayIn;
